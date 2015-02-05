@@ -1,0 +1,101 @@
+\documentclass[
+  11pt,
+  a4paper,
+  oneside,
+  parskip=half,   % Halbe Zeile Abstand zwischen Absätzen.
+  headsepline,    % Linie nach Kopfzeile.
+  footsepline,    % Linie vor Fusszeile.
+  abstracton,     % Abstract Überschriften
+  english        % Translator
+  ]{scrreprt}
+
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{sidecap}
+\usepackage{amssymb}
+\usepackage[xetex]{graphicx}
+\usepackage{fontspec,xunicode}
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\setmainfont{Calluna}
+\setsansfont[Scale=1.05]{Source Sans Pro}
+\setmonofont{Source Code Pro}
+\usepackage{xltxtra}
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{
+\put(0,0){
+\parbox[b][0.38\paperheight]{1.1\paperwidth}{%
+\vfill
+%\centering
+\hspace{-0.5cm}
+\includegraphics[width=1.1\paperwidth,
+keepaspectratio]{img/pattern.png}%
+%\vfill
+}}}
+
+\usepackage{colortbl}
+\usepackage{float}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage[chapter]{minted}
+\usepackage[onehalfspacing]{setspace}
+% Index-Erstellung
+\usepackage[scale=0.75]{geometry} % Um die Titelseite zu zentrieren
+\usepackage[english]{babel}
+\usepackage[babel,english]{csquotes}
+% Spezielle Tabellenform fuer Deckblatt
+\usepackage{longtable}
+\usepackage{harvardold}
+% Fussnoten
+\usepackage[perpage, hang, multiple, stable]{footmisc}
+% Verschiedene Schriftarten
+
+% Benutze die mylist-Umgebung, um nachher Hanging Bullets zu bekommen. Viel schöner :)
+%\usepackage{enumitem}
+%\newlist{mylist}{itemize}{1}
+%\setlist[mylist]{label=\textbullet,labelindent=-.5in,leftmargin=0pt,labelsep=.25in}
+
+%\usepackage{tocloft}
+
+\PassOptionsToPackage{hyphens}{url}
+% PDF Einstellungen
+\usepackage[%
+  pdftitle={\titel},
+  pdfauthor={\autor},
+  %pdfsubject={\arbeit},
+  pdfcreator={pdflatex, LaTeX with KOMA-Script},
+  pdfpagemode=UseOutlines, % Beim Oeffnen Inhaltsverzeichnis anzeigen
+  pdfdisplaydoctitle=true, % Dokumenttitel statt Dateiname anzeigen.
+  pdflang=eng,
+  unicode=true % Sprache des Dokuments.
+]{hyperref}
+
+\input{_common.tex}
+
+
+\title{\titel}
+\author{\autor}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+\input{abstract.tex}
+%\end{abstract}
+
+\input{intro.tex}
+\input{research.tex}
+\input{exploration.tex}
+\input{concepts.tex}
+\input{ideation.tex}
+\input{design.tex}
+\input{conclusion.tex}
+
+
+\bibliographystyle{agsm}
+
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{thesis}
+
+\end{document}
