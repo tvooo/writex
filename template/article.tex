@@ -26,15 +26,20 @@
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{caption}
-%\usepackage[chapter]{minted}
 \usepackage[onehalfspacing]{setspace}
-% Index-Erstellung
-\usepackage[scale=0.75]{geometry} % Um die Titelseite zu zentrieren
+
+%\usepackage[scale=0.75]{geometry} % Um die Titelseite zu zentrieren
 \usepackage[english]{babel}
 %\usepackage[babel,english]{csquotes}
 
-%\usepackage{harvardold}
-% Fussnoten
+<% if(bibtex) { %>
+\usepackage[sorting=nyt,style=authoryear]{biblatex}
+%\bibliographystyle{agsm}
+\bibliography{references}
+%\let\cite\autocite
+<% } %>
+
+% Footnotes
 \usepackage[perpage, hang, multiple, stable]{footmisc}
 
 \PassOptionsToPackage{hyphens}{url}
@@ -68,7 +73,8 @@
 \input{<%- filename %>}
 <% }); %>
 
-\bibliographystyle{agsm}
-\bibliography{thesis}
+<% if(bibtex) { %>
+\printbibliography
+<% } %>
 
 \end{document}

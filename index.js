@@ -47,16 +47,27 @@ async.series([
 
   function(callback) {
     // copy templates to /tmp
+    console.log("Copying LaTeX packages...");
+
+    async.each(['harvard.sty', 'minted.sty'], tasks.sty, callback);
+  },
+
+  function(callback) {
+    // copy templates to /tmp
     console.log("Compiling template files...");
 
     async.each([config.template, '_common.tex'], tasks.template, callback);
   },
 
   function(callback) {
-    // compile latex
+    // compile latex/bibtex
     console.log("Compiling to PDF using template " + chalk.blue(config.template));
 
-    tasks.latex(config.template, callback);
+    if(config.bibtex) {
+      tasks.bibtex(config.template, callback);
+    } else {
+      tasks.latex(config.template, callback);
+    }
   }
 ], function(err) {
   if(err) {

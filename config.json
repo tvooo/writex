@@ -1,7 +1,7 @@
 {
   "template": "article.tex",
   "abstract": true,
-  "bibtex": false,
+  "bibtex": true,
   "engine": "xelatex",
   "document": {
     "author": "Tim von Oldenburg",
