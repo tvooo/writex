@@ -7,7 +7,7 @@
   footsepline,    % Linie vor Fusszeile.
   abstracton,     % Abstract Überschriften
   english        % Translator
-  ]{scrreprt}
+  ]{scrartcl}
 
 \usepackage{ucs}
 \usepackage{amsmath}
@@ -20,24 +20,13 @@
 \setsansfont[Scale=1.05]{Source Sans Pro}
 \setmonofont{Source Code Pro}
 \usepackage{xltxtra}
-\usepackage{eso-pic}
-\newcommand\BackgroundPic{
-\put(0,0){
-\parbox[b][0.38\paperheight]{1.1\paperwidth}{%
-\vfill
-%\centering
-\hspace{-0.5cm}
-\includegraphics[width=1.1\paperwidth,
-keepaspectratio]{img/pattern.png}%
-%\vfill
-}}}
 
 \usepackage{colortbl}
 \usepackage{float}
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{caption}
-\usepackage[chapter]{minted}
+%\usepackage[chapter]{minted}
 \usepackage[onehalfspacing]{setspace}
 % Index-Erstellung
 \usepackage[scale=0.75]{geometry} % Um die Titelseite zu zentrieren
@@ -45,7 +34,7 @@ keepaspectratio]{img/pattern.png}%
 \usepackage[babel,english]{csquotes}
 % Spezielle Tabellenform fuer Deckblatt
 \usepackage{longtable}
-\usepackage{harvardold}
+%\usepackage{harvardold}
 % Fussnoten
 \usepackage[perpage, hang, multiple, stable]{footmisc}
 % Verschiedene Schriftarten
@@ -58,40 +47,35 @@ keepaspectratio]{img/pattern.png}%
 %\usepackage{tocloft}
 
 \PassOptionsToPackage{hyphens}{url}
-% PDF Einstellungen
+% PDF Settings
 \usepackage[%
-  pdftitle={\titel},
-  pdfauthor={\autor},
-  %pdfsubject={\arbeit},
+  pdftitle={<%= document.title %>},
+  pdfauthor={<%= document.author %>},
   pdfcreator={pdflatex, LaTeX with KOMA-Script},
-  pdfpagemode=UseOutlines, % Beim Oeffnen Inhaltsverzeichnis anzeigen
-  pdfdisplaydoctitle=true, % Dokumenttitel statt Dateiname anzeigen.
-  pdflang=eng,
-  unicode=true % Sprache des Dokuments.
+  pdfpagemode=UseOutlines,
+  pdfdisplaydoctitle=true,
+  %pdflang=eng,
+  unicode=true
 ]{hyperref}
 
 \input{_common.tex}
 
-
-\title{\titel}
-\author{\autor}
+\title{<%= document.title %>}
+\author{<%= document.author %>}
+\date{<%= document.date %>}
 
 \begin{document}
-
 \maketitle
 
-%\begin{abstract}
-\input{abstract.tex}
-%\end{abstract}
+<% if(abstract) { %>
+  \begin{abstract}
+    \input{abstract.tex}
+  \end{abstract}
+<% } %>
 
-\input{intro.tex}
-\input{research.tex}
-\input{exploration.tex}
-\input{concepts.tex}
-\input{ideation.tex}
-\input{design.tex}
-\input{conclusion.tex}
-
+<% _.forEach(files, function(filename) { %>
+\input{<%- filename %>}
+<% }); %>
 
 \bibliographystyle{agsm}
 

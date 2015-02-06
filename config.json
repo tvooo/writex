@@ -1,0 +1,11 @@
+{
+  "template": "paper",
+  "abstract": true,
+  "bibtex": false,
+  "engine": "xetex",
+  "document": {
+    "author": "Tim von Oldenburg",
+    "date": "\\today",
+    "title": "Towards a Markdown-based workflow for the creation of LaTeX documents"
+  }
+}
