@@ -8,13 +8,6 @@ var utils = require('./utils');
 
 var config = JSON.parse(fs.readFileSync('config.json'));
 
-// clean up tmp
-rimraf.sync('tmp/');
-
-if(!fs.exists('tmp/')) {
-  fs.mkdirSync('tmp/');
-}
-
 // collect content md files and inject into config
 var contentFiles =
   fs.readdirSync('write/')
@@ -28,6 +21,20 @@ var tasks = require('./tasks')(config);
 
 async.series([
   function(callback) {
+    console.log("Cleaning up...");
+    rimraf('tmp/', callback);
+  },
+
+  function(callback) {
+    console.log("Preparing...");
+    if(!fs.exists('tmp/')) {
+      fs.mkdir('tmp/', callback)
+    } else {
+      callback(null);
+    }
+  },
+
+  function(callback) {
     // compile markdown to tex
     console.log("Compiling markdown files...");
 
@@ -35,40 +42,25 @@ async.series([
       fs.readdirSync('write/')
         .filter(utils.onlyMarkdown)
 
-    async.each(sourceFiles, tasks.pandoc, function(err) {
-      if(err) {
-        callback(err);
-      } else {
-        callback(null);
-      }
-    });
+    async.each(sourceFiles, tasks.pandoc, callback);
   },
 
   function(callback) {
     // copy templates to /tmp
     console.log("Compiling template files...");
 
-    async.each([config.template, '_common.tex'], tasks.template, function(err) {
-      if(err) {
-        console.log(chalk.red('Error while compiling templates'));
-        callback(err);
-      } else {
-        callback(null);
-      }
-    });
+    async.each([config.template, '_common.tex'], tasks.template, callback);
   },
 
   function(callback) {
     // compile latex
     console.log("Compiling to PDF using template " + chalk.blue(config.template));
 
-    tasks.latex(config.template, function(err) {
-      if(err) {
-        console.error(chalk.red(err));
-      } else {
-        console.log(chalk.green('Done compiling LaTeX'));
-      }
-    });
+    tasks.latex(config.template, callback);
   }
-]);
+], function(err) {
+  if(err) {
+    console.error(chalk.red(err));
+  }
+});
 
