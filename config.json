@@ -1,8 +1,8 @@
 {
-  "template": "paper",
+  "template": "article.tex",
   "abstract": true,
   "bibtex": false,
-  "engine": "xetex",
+  "engine": "xelatex",
   "document": {
     "author": "Tim von Oldenburg",
     "date": "\\today",

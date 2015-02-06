@@ -31,20 +31,11 @@
 % Index-Erstellung
 \usepackage[scale=0.75]{geometry} % Um die Titelseite zu zentrieren
 \usepackage[english]{babel}
-\usepackage[babel,english]{csquotes}
-% Spezielle Tabellenform fuer Deckblatt
-\usepackage{longtable}
+%\usepackage[babel,english]{csquotes}
+
 %\usepackage{harvardold}
 % Fussnoten
 \usepackage[perpage, hang, multiple, stable]{footmisc}
-% Verschiedene Schriftarten
-
-% Benutze die mylist-Umgebung, um nachher Hanging Bullets zu bekommen. Viel schöner :)
-%\usepackage{enumitem}
-%\newlist{mylist}{itemize}{1}
-%\setlist[mylist]{label=\textbullet,labelindent=-.5in,leftmargin=0pt,labelsep=.25in}
-
-%\usepackage{tocloft}
 
 \PassOptionsToPackage{hyphens}{url}
 % PDF Settings
@@ -54,7 +45,7 @@
   pdfcreator={pdflatex, LaTeX with KOMA-Script},
   pdfpagemode=UseOutlines,
   pdfdisplaydoctitle=true,
-  %pdflang=eng,
+  pdflang=eng,
   unicode=true
 ]{hyperref}
 
@@ -78,8 +69,6 @@
 <% }); %>
 
 \bibliographystyle{agsm}
-
-\addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{thesis}
 
 \end{document}

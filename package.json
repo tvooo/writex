@@ -20,9 +20,7 @@
     "async": "^0.9.0",
     "chalk": "^0.5.1",
     "commander": "^2.6.0",
-    "lodash": "^3.1.0",
     "lodash-template-stream": "^1.0.0",
-    "ncp": "^1.0.1",
     "rimraf": "^2.2.8"
   }
 }
