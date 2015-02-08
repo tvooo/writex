@@ -1,77 +1,53 @@
+#!/usr/bin/env node
+
+// runtime deps
 var fs = require('fs'),
     path = require('path');
-var chalk = require('chalk');
-var async = require('async');
-var rimraf = require('rimraf');
 
-var utils = require('./utils');
+// other deps
+var chalk = require('chalk'),
+    program = require('commander');
 
-var config = JSON.parse(fs.readFileSync('config.json'));
+// own deps
+var utils = require('./src/utils');
 
-// collect content md files and inject into config
-var contentFiles =
-  fs.readdirSync('write/')
-    .filter(utils.onlyMarkdown)
-    .filter(utils.onlyContent)
-    .map(utils.mdToTex);
+process.title = 'writex';
 
-config.files = contentFiles;
+program
+  .version('1.0.0')
+  .option("-c, --config-file [mode]", "Choose a different configuration file")
 
-var tasks = require('./tasks')(config);
+program
+  .command('watch')
+  .description('watch and compile the project in current folder')
+  .action(function(template) {
+    console.log(chalk.yellow('WARNING: Watching is not yet implemented'));
+  });
 
-async.series([
-  function(callback) {
-    console.log("Cleaning up...");
-    rimraf('tmp/', callback);
-  },
+program
+  .command('init <template>')
+  .description('run setup commands for all envs')
+  .action(function(template) {
+    console.log(chalk.yellow('WARNING: Project scaffolding is not yet implemented'));
+  });
 
-  function(callback) {
-    console.log("Preparing...");
-    if(!fs.exists('tmp/')) {
-      fs.mkdir('tmp/', callback)
+program
+  .command('init-template <name>')
+  .description('scaffold a WriTeX template')
+  .action(function(name) {
+    console.log(chalk.yellow('WARNING: Template scaffolding is not yet implemented'));
+  });
+
+program.parse(process.argv);
+
+if (!program.args.length) {
+  utils.readConfig(function(err, config) {
+    if(err) {
+      console.error(chalk.red(err.toString()));
     } else {
-      callback(null);
+      config.contentFolder = process.cwd();
+      console.log(config);
+      require('./src/lib').compile(config);
     }
-  },
-
-  function(callback) {
-    // compile markdown to tex
-    console.log("Compiling markdown files...");
-
-    var sourceFiles =
-      fs.readdirSync('write/')
-        .filter(utils.onlyMarkdown)
-
-    async.each(sourceFiles, tasks.pandoc, callback);
-  },
-
-  function(callback) {
-    // copy templates to /tmp
-    console.log("Copying LaTeX packages...");
-
-    async.each(['harvard.sty', 'minted.sty'], tasks.sty, callback);
-  },
-
-  function(callback) {
-    // copy templates to /tmp
-    console.log("Compiling template files...");
-
-    async.each([config.template, '_common.tex'], tasks.template, callback);
-  },
-
-  function(callback) {
-    // compile latex/bibtex
-    console.log("Compiling to PDF using template " + chalk.blue(config.template));
-
-    if(config.bibtex) {
-      tasks.bibtex(config.template, callback);
-    } else {
-      tasks.latex(config.template, callback);
-    }
-  }
-], function(err) {
-  if(err) {
-    console.error(chalk.red(err));
-  }
-});
-
+  });
+}
