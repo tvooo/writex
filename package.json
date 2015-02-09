@@ -28,5 +28,10 @@
     "js-yaml": "^3.2.6",
     "lodash-template-stream": "^1.0.0",
     "rimraf": "^2.2.8"
-  }
+  },
+  "keywords": [
+    "writex",
+    "markdown",
+    "latex"
+  ]
 }

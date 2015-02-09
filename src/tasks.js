@@ -8,6 +8,9 @@ var lodashStreamer = require('lodash-template-stream');
 
 module.exports = function(config) {
   return {
+    updateConfig: function(c) {
+      config = c;
+    },
     pandoc: function(sourceFile, callback) {
       console.log('...' + chalk.yellow(sourceFile));
       var compile = spawn('pandoc', ['--section', '--no-tex-ligatures', '--normalize', '--biblatex', /*'--filter', 'pandoc-citeproc',*/ path.join(config.contentFolder, sourceFile), '-o', path.join(config.tmpFolder, utils.mdToTex(sourceFile))]);
