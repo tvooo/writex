@@ -49,9 +49,9 @@ module.exports = function(config) {
     console.log("Compiling to PDF using template " + chalk.blue(config.template));
 
     if(config.bibtex) {
-      tasks.bibtex(config.template, callback);
+      tasks.bibtex(callback);
     } else {
-      tasks.latex(config.template, callback);
+      tasks.latex(callback);
     }
   }
 

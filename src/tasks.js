@@ -44,22 +44,22 @@ module.exports = function(config) {
         .pipe(out);
     },
 
-    latex: function(sourceFile, callback) {
-      console.log('...' + chalk.yellow(sourceFile));
-      var compile = spawn(config.engine, ['-shell-escape', '-interaction', 'nonstopmode', sourceFile], { cwd: config.tmpFolder});
+    latex: function(callback) {
+      console.log('...' + chalk.magenta('LaTeX'));
+      var compile = spawn(config.engine, ['-shell-escape', '-interaction', 'nonstopmode', 'template.tex'], { cwd: config.tmpFolder});
       compile.on('close', function(code) {
-        if (code !== 0) {
+        /*if (code !== 0) {
           callback(new Error(config.engine + ' failed with error code ' + code));
-        } else {
+        } else {*/
           callback(null, true);
-        }
+        //}
       });
       compile.stderr.on('data', function (data) {
         console.log('' + data);
       });
     },
 
-    bibtex: function(sourceFile, callback) {
+    bibtex: function(callback) {
       function copyBibliography(cb) {
         console.log('...' + chalk.magenta('cp references.bib'));
         var out = fs.createWriteStream(path.join(config.tmpFolder, 'references.bib'));
