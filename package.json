@@ -1,6 +1,6 @@
 {
   "name": "writex",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Create beautiful LaTeX documents with Markdown",
   "main": "index.js",
   "scripts": {
